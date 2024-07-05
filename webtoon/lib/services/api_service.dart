@@ -1,3 +1,5 @@
+//API에 요청을 보낼 클래스
+
 import 'dart:convert';
 import 'dart:developer';
 
@@ -14,6 +16,8 @@ class ApiService{
 
       List<WebtoonModel> webtoonInstances =[]; //Json으로 웹툰을 만들 때 마다 여기 리스트에다가 추가함
 
+
+      //API에 http요청
       final url = Uri.parse('$baseUrl/$today');
       final response = await http.get(url); //await는 이 부분이 처리될 때 까지 기다리라고 하는것,그리고 async함수 내에서만 사용가능
 
@@ -31,8 +35,9 @@ class ApiService{
                {
                   // final toon = WebtoonModel.fromJson(webtoon);
                   // print(toon.title); //긁어온 데이터들을 dart에서 쓸 수 있게 할 수 있는지 확인용 코드
+                  final instance = WebtoonModel.fromJson(webtoon);
 
-                  webtoonInstances.add(WebtoonModel.fromJson(webtoon));
+                  webtoonInstances.add(instance);
                }
 
             return webtoonInstances;
