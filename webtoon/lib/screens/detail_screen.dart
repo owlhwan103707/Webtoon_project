@@ -32,14 +32,19 @@ class DetailScreen extends StatelessWidget
           Row(//썸네일 누르면 들어와서 이미지 생성
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container( //이미지의 크기가 커져서 요걸로 수정함
-                width: 250,
-                clipBehavior: Clip.hardEdge, //단순히 borderradius를 쓰면 적용이 안된다. clipbehavior는 자식의 부모 영역 침범을 제어하는것이다.
-                decoration: BoxDecoration( //둥근 효과
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [BoxShadow(blurRadius: 15,offset: Offset(10,10),color: Colors.black.withOpacity(0.5),)] //그림자 효과
+
+
+              Hero(//Hero위젯은 두 화면 사이의 애니메이션 전환을 쉽게 제공하는 위젯이다.
+                tag: id,
+                child: Container( //이미지의 크기가 커져서 요걸로 수정함
+                  width: 250,
+                  clipBehavior: Clip.hardEdge, //단순히 borderradius를 쓰면 적용이 안된다. clipbehavior는 자식의 부모 영역 침범을 제어하는것이다.
+                  decoration: BoxDecoration( //둥근 효과
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [BoxShadow(blurRadius: 15,offset: Offset(10,10),color: Colors.black.withOpacity(0.5),)] //그림자 효과
+                  ),
+                  child: Image.network(thumb,headers: const{'Referer':'https://comic.naver.com'},),
                 ),
-                child: Image.network(thumb,headers: const{'Referer':'https://comic.naver.com'},),
               ),
             ],
           ),
