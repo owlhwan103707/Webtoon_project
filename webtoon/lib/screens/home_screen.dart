@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webtoon/services/api_service.dart';
+import 'package:webtoon/widgets/webtoon_sidget.dart';
 
 import '../models/webtoon_model.dart';
 
@@ -62,29 +63,12 @@ class Homescreen extends StatelessWidget{
               padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),//이미지의 padding
               itemBuilder: (context,index)
               {
-                print(index); //이 함수가 어떻게 움직이는지 이해하고 싶으면 이거 사용
+                //print(index); //이 함수가 어떻게 움직이는지 이해하고 싶으면 이거 사용
                 var webtton = snapshot.data![index];
 
 
 
-                return Column(
-                  children: [
-
-                    Container( //이미지의 크기가 커져서 요걸로 수정함
-                      width: 250,
-                      clipBehavior: Clip.hardEdge, //단순히 borderradius를 쓰면 적용이 안된다. clipbehavior는 자식의 부모 영역 침범을 제어하는것이다.
-                      decoration: BoxDecoration( //둥근 효과
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [BoxShadow(blurRadius: 15,offset: Offset(10,10),color: Colors.black.withOpacity(0.5),)] //그림자 효과
-                      ),
-                      child: Image.network(webtton.thumb,headers: const{'Referer':'https://comic.naver.com'},),
-                    ),
-
-
-                    SizedBox(height: 10,),
-                    Text(webtton.title,style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600),),
-                  ],
-                );
+                return Webtoon(title: webtton.title, thumb: webtton.thumb, id: webtton.id,);
               },
               separatorBuilder: (context,index) => const SizedBox(width: 40,), //인덱스 사이의 구분자를 넣기 위함
             );
