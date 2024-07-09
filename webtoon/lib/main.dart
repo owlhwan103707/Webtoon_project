@@ -5,7 +5,7 @@ import 'package:webtoon/services/api_service.dart';
 
 
 void main() {
-  ApiService().getTodaysToons();
+
 
   runApp(const App());
 }
