@@ -69,6 +69,37 @@ class _DetailScreenState extends State<DetailScreen> {
             ],
           ),
 
+          const SizedBox(height: 20,),//칸 띄우기용
+
+
+
+          FutureBuilder(future: webtoon, builder: (context,snapshot) //상세 이미지 설명 데이터
+            {
+            if(snapshot.hasData)
+              {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: [
+
+
+                      Text('${snapshot.data!.genre} / ${snapshot.data!.age}',style: TextStyle(fontSize: 16),),
+
+
+                      const SizedBox(height: 20,),//칸 띄우기용
+
+                      Text(snapshot.data!.about,style: TextStyle(fontSize: 16),),
+
+                    ],
+                  ),
+                );
+              }
+            return Text('xxxx');
+            },
+          )
+
         ],
       ),
       );
