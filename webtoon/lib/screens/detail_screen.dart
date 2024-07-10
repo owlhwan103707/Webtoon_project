@@ -69,11 +69,14 @@ class _DetailScreenState extends State<DetailScreen> {
                           borderRadius: BorderRadius.circular(15),
                           boxShadow: [BoxShadow(blurRadius: 15,offset: Offset(10,10),color: Colors.black.withOpacity(0.5),)] //그림자 효과
                       ),
+
                       child: Image.network(widget.thumb,headers: const{'Referer':'https://comic.naver.com'},),
 
                     ),
                   ),
+
                 ],
+
               ),
 
               const SizedBox(height: 20,),//칸 띄우기용
@@ -91,6 +94,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
 
                         Text('${snapshot.data!.genre} / ${snapshot.data!.age}',style: TextStyle(fontSize: 10),),
+
 
 
                         const SizedBox(height: 20,),//칸 띄우기용
@@ -112,7 +116,8 @@ class _DetailScreenState extends State<DetailScreen> {
 
 
 
-              FutureBuilder(future: episodes, builder: (context,snapshot) //상세 이미지 설명 데이터
+
+          FutureBuilder(future: episodes, builder: (context,snapshot) //상세 이미지 설명 데이터
               {
                 if(snapshot.hasData)
                         {

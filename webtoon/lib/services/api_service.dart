@@ -12,6 +12,8 @@ class ApiService{
    static const String baseUrl = "https://webtoon-crawler.nomadcoders.workers.dev";
    static const String today = "today";
 
+   static const String episodes = "episodes"; //개레전드 사건 그냥 이거 없어서 3시간 날려먹음 -> 7월 11일
+
    static Future<List<WebtoonModel>> getTodaysToons()async{
       //getTodaysToons라는 함수를 불렀을 때 Dart가 제대로 완료될때까지 기다릴길 원한다 -> ApI 요청이 처리돼서 응답을 반활할 때까지 기다리는거
       //이걸 비동기 programming이라고 함
@@ -70,7 +72,8 @@ static Future<WebtoonDetailModel> getToonbyId(String id) async {
 
    static Future<List<WebtoonEpisodeModel>> getLatestEpisodesbyId(String id) async {
       List<WebtoonEpisodeModel> episodesInstances = [];
-      final url = Uri.parse("$baseUrl/$id"); //url을 만듬
+      final url = Uri.parse("$baseUrl/$id/$episodes"); //url을 만듬
+      // Error type _Map<String,dynamic>' is not a subtype of type 'Iterable<dynamic> 이런에러까지 발생함  $episodes요거 없어서
       final response = await http.get(url); //해당 url로 request를 보냄
       if(response.statusCode == 200) //request가 성공적이라면 response.body를 받아서 json으로 바꿔주기
           {
@@ -86,6 +89,12 @@ static Future<WebtoonDetailModel> getToonbyId(String id) async {
       }
       throw Error();
    }
+
+
+
+
+
+
 
 
 
