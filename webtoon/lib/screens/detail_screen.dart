@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:webtoon/models/webtoon_detail_model.dart';
 import 'package:webtoon/models/webtoon_episode_model.dart';
 import 'package:webtoon/services/api_service.dart';
+
+import '../widgets/episode_widget.dart';
 //이미지를 클릭시 여기로 보내고 싶음
 //그럴러면 어떤 웹툰을 클릭했는지에 대한 정보가 필요함
 //그래야 detailscreen이 해당 웹툰의 정보를 보여줄 수 있기 때문
@@ -33,6 +37,7 @@ class _DetailScreenState extends State<DetailScreen> {
     webtoon = ApiService.getToonbyId(widget.id); // 웹툰 디테일용 퓨처
     episodes = ApiService.getLatestEpisodesbyId(widget.id); //에피소드용 퓨처
   }
+
 
 
   @override
@@ -93,7 +98,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       children: [
 
 
-                        Text('${snapshot.data!.genre} / ${snapshot.data!.age}',style: TextStyle(fontSize: 10),),
+                        Text('${snapshot.data!.genre} / ${snapshot.data!.age}',style: TextStyle(fontSize: 16),),
 
 
 
@@ -109,7 +114,7 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
 
 
-              //const SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
               //Text('dhwlghks',style: TextStyle(fontSize: 100),), //체크용
 
@@ -124,23 +129,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           return Column(
                             children: [
                               for(var episode in snapshot.data!)
-                                Container(
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  decoration: BoxDecoration(color: Colors.green.shade400,
-                                      borderRadius: BorderRadius.circular(20)),
-
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 40),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(episode.title,style: TextStyle(color: Colors.white,fontSize: 16),),
-                                        Icon(Icons.chevron_right_rounded,color: Colors.white,),
-
-                                      ],
-                                    ),
-                                  ),
-                                )
+                                Episode(episode: episode,webtoonId:widget.id,)
                             ],
                           );
                         }
@@ -162,3 +151,8 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 }
+
+
+
+
+
