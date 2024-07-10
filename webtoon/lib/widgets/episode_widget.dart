@@ -18,7 +18,8 @@ class Episode extends StatelessWidget {
 
   onButtontap()async
   {
-    await launchUrlString("https://comic.naver.com/webtoon/detail?titleId=$webtoonId&no=${episode.id}");
+    await launchUrlString(
+        "https://comic.naver.com/webtoon/detail?titleId=$webtoonId&no=${episode.id}");//상시로 바뀔 수 있는 페이지 확인!!!
   }
 
   @override
@@ -34,7 +35,7 @@ class Episode extends StatelessWidget {
             borderRadius: BorderRadius.circular(20)),
       
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 40),
+          padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 30),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

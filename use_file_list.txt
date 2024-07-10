@@ -1,0 +1,21 @@
+Directory -> models 
+	webtoon_detail_model.dart
+	webtoon_episode_model.dart
+	webtoon_model.dart
+
+Directory -> screens
+	detail_screen.dart
+	home_screen.dart
+
+Directory -> services
+	api_service.dart
+
+Directory -> widgets
+	episode_widget.dart
+	webtoon_widget.dart
+
+
+부가적인것들
+main.dart
+info.plist
+pubspec.yaml

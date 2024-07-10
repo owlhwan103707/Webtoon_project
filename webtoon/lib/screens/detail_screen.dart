@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:webtoon/models/webtoon_detail_model.dart';
@@ -29,6 +30,30 @@ class _DetailScreenState extends State<DetailScreen> {
 
   late Future <WebtoonDetailModel> webtoon ; //웹툰 디테일용 퓨처
   late Future <List<WebtoonEpisodeModel>> episodes; //에피소드용 퓨처
+  late SharedPreferences prefs; //좋아요 담기용
+  bool isLiked = false; //좋아요 관련
+
+
+  Future initPrefs()async{
+    prefs = await SharedPreferences.getInstance();
+    final likedToons = prefs.getStringList('likedToons');
+
+    if(likedToons != null) //사용자가 처음 열었을때의 상황 -> 처음열면 likeToons가 없음
+      {
+        if(likedToons.contains(widget.id)==true)
+          {
+            setState(() {
+              isLiked = true;
+            });
+
+          }
+      }
+    else
+      {
+        await prefs.setStringList('likedToons', []);
+      }
+  }
+
   @override
 
   void initState() { //이 initState를 사용하기 위해서 기존의 stateless위젯에서 stateful위젯으로 바꿈!!!
@@ -36,9 +61,27 @@ class _DetailScreenState extends State<DetailScreen> {
     super.initState();
     webtoon = ApiService.getToonbyId(widget.id); // 웹툰 디테일용 퓨처
     episodes = ApiService.getLatestEpisodesbyId(widget.id); //에피소드용 퓨처
+    initPrefs();
   }
 
-
+  onHeartTap()async{ //사용자가 버튼을 누르면
+    final likedToons = prefs.getStringList('likedToons'); //List를 가져온다
+    if(likedToons != null)
+      {
+        if(isLiked) //만약 이미 좋아요를 눌렀다면 지우고
+          {
+            likedToons.remove(widget.id);
+          }
+        else // 아니라면 추가한다.
+          {
+            likedToons.add(widget.id);
+          }
+        await prefs.setStringList('likedToons', likedToons); //그리고 일단 휴대폰 저장소에 추가한다.
+        setState(() {
+          isLiked = !isLiked;
+        });
+      }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +92,10 @@ class _DetailScreenState extends State<DetailScreen> {
         elevation: 2,
         backgroundColor: Colors.white,
         foregroundColor: Colors.green,
+        actions: [
+          IconButton(onPressed: onHeartTap, //좋아요 함수
+            icon: Icon( isLiked ? Icons.favorite : Icons.favorite_border_rounded,),)//부가적인 웹툰 좋아요 기능
+        ],
         title:  Text("${widget.title}",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w400),),
         ),
       body: SingleChildScrollView(
@@ -75,7 +122,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           boxShadow: [BoxShadow(blurRadius: 15,offset: Offset(10,10),color: Colors.black.withOpacity(0.5),)] //그림자 효과
                       ),
 
-                      child: Image.network(widget.thumb,headers: const{'Referer':'https://comic.naver.com'},),
+                      child: Image.network(widget.thumb,headers: const{'Referer':'https://comic.naver.com'},), //상시로 바뀔 수 있는 페이지 확인!!!
 
                     ),
                   ),
