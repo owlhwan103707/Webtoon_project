@@ -35,8 +35,8 @@ class ApiService{
 
             for (var webtoon in webtoons)
                {
-                  // final toon = WebtoonModel.fromJson(webtoon);
-                  // print(toon.title); //긁어온 데이터들을 dart에서 쓸 수 있게 할 수 있는지 확인용 코드
+                   //final toon = WebtoonModel.fromJson(webtoon);
+                   //print(toon.title); //긁어온 데이터들을 dart에서 쓸 수 있게 할 수 있는지 확인용 코드
                   final instance = WebtoonModel.fromJson(webtoon);
 
                   webtoonInstances.add(instance);
@@ -65,6 +65,9 @@ static Future<WebtoonDetailModel> getToonbyId(String id) async {
 }
 
 
+
+
+
    static Future<List<WebtoonEpisodeModel>> getLatestEpisodesbyId(String id) async {
       List<WebtoonEpisodeModel> episodesInstances = [];
       final url = Uri.parse("$baseUrl/$id"); //url을 만듬
@@ -76,6 +79,8 @@ static Future<WebtoonDetailModel> getToonbyId(String id) async {
          for(var episode in episodes)
             {
                episodesInstances.add(WebtoonEpisodeModel.fromJson(episode));
+
+
             }
          return episodesInstances;
       }
